@@ -55,7 +55,7 @@ main_logo_enable = False
 logo_name = "IPF.png"
 #----------------------------
 #Configure the Startup Screen
-version_text = 'Version: 2.0.6 LiftingCast Integration'
+version_text = 'Version: 2.0.6.1 KICKASS EDITION'
 #-----------------------------
 #Configure Opener Change
 #opener change message?
@@ -181,17 +181,12 @@ def liftingCast_server():
         clock_resp['timerLength']= LC_time
         return json.dumps(clock_resp)
         
-               
-
-    
-    
-     
     if __name__ == "__main__":
         app.run(host='0.0.0.0',port=5011)
             
 
 t = Thread(target = liftingCast_server)
-t.start()
+#t.start()
 
 
 #If I preload all the images here, then it should speed up the program.
@@ -668,7 +663,7 @@ def change_light():
         lDown = False
 
         head_white = False
-        head_yellow = False
+        head_yellow = True
         
     if kDown and change_mind and show_infraction_cards: #chief ref blue card
         red5 = 255
@@ -1762,10 +1757,14 @@ def timer_update():
             if event.key == pygame.K_KP_ENTER: #if the exit key is pressed, make the boolean variable false and exit
                 timer_edit_mode = False
                 scroll_lock_count = 0
-                LC_time = Time[0]*60+Time[1]
+                LC_time = (Time[0]*60+Time[1])*1000 #needs to be in miliseconds
                 clock_resp['clockState']="RESET"
                 clock_resp['timerLength']= LC_time
-                q.put(clock_resp)
+                #q.put(clock_resp)
+                with open('DRL_data.json', 'w') as outfile:  
+                    json.dump(clock_resp, outfile)
+                    print 'writing clock data to json file'
+                
                 if Time[0] >= 5:
                     meet_break = True #if the timer has been set for 5 min or greater, we need to display opener change warnings
                     #print 'a timer duration greater than 5 minutes has been detected'
@@ -1909,10 +1908,13 @@ def manual_reset():
         Time = [1,0]
         scroll_lock_count = 0 
         screen_clear()
-        LC_time = Time[0]*60+Time[1]
+        LC_time = (Time[0]*60+Time[1])*1000 #needs to be in miliseconds
         clock_resp['clockState']="RESET"
         clock_resp['timerLength']= LC_time
-        q.put(clock_resp)
+        #q.put(clock_resp)
+        with open('DRL_data.json', 'w') as outfile:  
+            json.dump(clock_resp, outfile)
+            print 'writing clock data to json file'
 
 
 def audio_output():
@@ -2199,7 +2201,7 @@ def drl_decisions_to_liftingcast_decisions(left_white,
                                              left_red,
                                              left_blue,
                                              left_yellow),
-        "refMiddle": drl_lights_to_decision_cards(head_white,
+        "refHead": drl_lights_to_decision_cards(head_white,
                                              head_red,
                                              head_blue,
                                              head_yellow),
@@ -2208,7 +2210,9 @@ def drl_decisions_to_liftingcast_decisions(left_white,
                                               right_blue,
                                               right_yellow)
     }
-    q.put(liftingCastLights)
+    #q.put(liftingCastLights)
+    with open('DRL_data.json', 'w') as outfile:  
+        json.dump(liftingCastLights, outfile)
 
 
 def liftingcast_decisions_to_result(liftingcast_decision_cards_dict):
@@ -2419,10 +2423,12 @@ while True:
                 right_blue = False
                 right_yellow = False
 
-                LC_time = Time[0]*60+Time[1]
+                LC_time = (Time[0]*60+Time[1])*1000 #needs to be in miliseconds
                 clock_resp['clockState']="RESET"
                 clock_resp['timerLength']= LC_time
-                q.put(clock_resp)
+                #q.put(clock_resp)
+                #with open('DRL_data.json', 'w') as outfile:  
+                    #json.dump(clock_resp, outfile)
 
             #---------------SELECTION CLOCK VARIABLE!!!----------------------
                 start_selection_clock = True
@@ -2634,17 +2640,29 @@ while True:
                         if event.key == pygame.K_c:
                             scroll_lock_count += 1
 
-                            LC_time = Time[0]*60+Time[1] #convert to minutes
+                            LC_time = (Time[0]*60+Time[1])*1000 #convert to seconds/minutes?
 
                             if scroll_lock_count%2 == 0:
-                                clock_resp['clockState']="PAUSED"
+                                meet_break = False
+                                print 'LiftingCast Clock RESET Detected'
+                                scroll_lock_count = 0
+                                Time[0] = 1
+                                Time[1] = 0
+                                LC_time = (Time[0]*60+Time[1])*1000 #convert to minutes
+                                clock_resp['clockState']="RESET"
                                 clock_resp['timerLength']= LC_time
-                                q.put(clock_resp)
+                                #q.put(clock_resp)
+                                with open('DRL_data.json', 'w') as outfile:  
+                                    json.dump(clock_resp, outfile)
+                                    print 'writing clock data to json file'
 
                             else:
                                 clock_resp['clockState']="STARTED"
                                 clock_resp['timerLength']= LC_time
-                                q.put(clock_resp)
+                                #q.put(clock_resp)
+                                with open('DRL_data.json', 'w') as outfile:  
+                                    json.dump(clock_resp, outfile)
+                                    print 'writing clock data to json file'
                                 
                                 
 
