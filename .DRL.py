@@ -29,6 +29,8 @@ from threading import Thread
 import Queue
 q = Queue.Queue()
 import json
+from hotqueue import HotQueue
+queue = HotQueue("test", serializer=json, host="localhost", port=6379, db=0)
 
 pygame.init()
 pygame.font.init()
@@ -1761,9 +1763,8 @@ def timer_update():
                 clock_resp['clockState']="RESET"
                 clock_resp['timerLength']= LC_time
                 #q.put(clock_resp)
-                with open('DRL_data.json', 'w') as outfile:  
-                    json.dump(clock_resp, outfile)
-                    print 'writing clock data to json file'
+                print 'writing clock data to queue'
+                queue.put(clock_resp)
                 
                 if Time[0] >= 5:
                     meet_break = True #if the timer has been set for 5 min or greater, we need to display opener change warnings
@@ -1912,9 +1913,8 @@ def manual_reset():
         clock_resp['clockState']="RESET"
         clock_resp['timerLength']= LC_time
         #q.put(clock_resp)
-        with open('DRL_data.json', 'w') as outfile:  
-            json.dump(clock_resp, outfile)
-            print 'writing clock data to json file'
+        print 'writing clock data to queue'
+        queue.put(clock_resp)
 
 
 def audio_output():
@@ -2211,8 +2211,7 @@ def drl_decisions_to_liftingcast_decisions(left_white,
                                               right_yellow)
     }
     #q.put(liftingCastLights)
-    with open('DRL_data.json', 'w') as outfile:  
-        json.dump(liftingCastLights, outfile)
+    queue.put(liftingCastLights)
 
 
 def liftingcast_decisions_to_result(liftingcast_decision_cards_dict):
@@ -2652,17 +2651,13 @@ while True:
                                 clock_resp['clockState']="RESET"
                                 clock_resp['timerLength']= LC_time
                                 #q.put(clock_resp)
-                                with open('DRL_data.json', 'w') as outfile:  
-                                    json.dump(clock_resp, outfile)
-                                    print 'writing clock data to json file'
+                                queue.put(clock_resp)
 
                             else:
                                 clock_resp['clockState']="STARTED"
                                 clock_resp['timerLength']= LC_time
                                 #q.put(clock_resp)
-                                with open('DRL_data.json', 'w') as outfile:  
-                                    json.dump(clock_resp, outfile)
-                                    print 'writing clock data to json file'
+                                queue.put(clock_resp)
                                 
                                 
 
