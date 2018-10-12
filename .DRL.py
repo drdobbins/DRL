@@ -30,8 +30,23 @@ import Queue
 q = Queue.Queue()
 import json
 import requests
+import datetime
 
 output_url = "http://localhost:3000"
+
+def timestamp():
+    return datetime.datetime.now().replace(microsecond=0).isoformat()
+
+def send(data, description):
+    print '{timestamp}  sending {description} to {url}'.format(timestamp=timestamp(),
+                                                               description=description,
+                                                               url=output_url)
+    try:
+        requests.post(output_url, json=data, timeout=3.05)
+    except requests.exceptions.RequestException:
+        print '{timestamp}  REQUEST FAILED.\nCheck the program that communicates the DRL data to Liftingcast. Is it running? Is it listening on {url} ?'.format(timestamp=timestamp(),
+                                                                                                                                                                url=output_url)
+
 
 pygame.init()
 pygame.font.init()
@@ -1764,10 +1779,8 @@ def timer_update():
                 clock_resp['clockState']="RESET"
                 clock_resp['timerLength']= LC_time
                 #q.put(clock_resp)
-                print output_url
-                requests.post(output_url, json=clock_resp)
-                print 'sending clock data to server'
-                
+                send(clock_resp, 'clock data')
+
                 if Time[0] >= 5:
                     meet_break = True #if the timer has been set for 5 min or greater, we need to display opener change warnings
                     #print 'a timer duration greater than 5 minutes has been detected'
@@ -1915,9 +1928,7 @@ def manual_reset():
         clock_resp['clockState']="RESET"
         clock_resp['timerLength']= LC_time
         #q.put(clock_resp)
-        print output_url
-        requests.post(output_url, json=clock_resp)
-        print 'sending clock data to server'
+        send(clock_resp, 'clock data')
 
 
 def audio_output():
@@ -2214,8 +2225,7 @@ def drl_decisions_to_liftingcast_decisions(left_white,
                                               right_yellow)
     }
     #q.put(liftingCastLights)
-    print output_url
-    requests.post(output_url, json=liftingCastLights)
+    send(liftingCastLights, 'lights data')
 
 
 def liftingcast_decisions_to_result(liftingcast_decision_cards_dict):
@@ -2655,17 +2665,13 @@ while True:
                                 clock_resp['clockState']="RESET"
                                 clock_resp['timerLength']= LC_time
                                 #q.put(clock_resp)
-                                print output_url
-                                requests.post(output_url, json=clock_resp)
-                                print 'sending clock data to server'
+                                send(clock_resp, 'clock data')
 
                             else:
                                 clock_resp['clockState']="STARTED"
                                 clock_resp['timerLength']= LC_time
                                 #q.put(clock_resp)
-                                print output_url
-                                requests.post(output_url, json=clock_resp)
-                                print 'sending clock data to server'
+                                send(clock_resp, 'clock data')
                                 
                                 
 
