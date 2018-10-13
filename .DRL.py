@@ -31,16 +31,22 @@ q = Queue.Queue()
 import json
 import requests
 import datetime
+import pprint
 
 output_url = "http://localhost:3000"
+
+pp = pprint.PrettyPrinter(indent=4)
 
 def timestamp():
     return datetime.datetime.now().replace(microsecond=0).isoformat()
 
 def send(data, description):
-    print '{timestamp}  sending {description} to {url}'.format(timestamp=timestamp(),
-                                                               description=description,
-                                                               url=output_url)
+    print '{timestamp}  sending {description} to {url}:'.format(timestamp=timestamp(),
+                                                                description=description,
+                                                                url=output_url)
+    pp.pprint(data)
+    print '\n\n'
+
     try:
         requests.post(output_url, json=data, timeout=3.05)
     except requests.exceptions.RequestException:
