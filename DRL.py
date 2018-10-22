@@ -5,6 +5,9 @@
 #Includes slow clock bug, and 3 dots of death fix.
 #2.0.3-Resizing of logos for different resolutions
 #2.0.4-IPF 3rd timer requirement.
+#2.0.5-World Games RS232 Integration
+#2.0.6-LiftingCast Integration
+#2.0.7-Remote Update Functionality
 
 #Created by Scott Dobbins
 #This software shall not be redistrubted without the expressed written consent of Scott Dobbins
@@ -47,7 +50,7 @@ main_logo_enable = True
 logo_name = "uruguay.png"
 #----------------------------
 #Configure the Startup Screen'''
-version_text = 'Version: 2.0.4'
+version_text = 'Version: 2.0.7'
 #-----------------------------
 #Configure Opener Change
 #opener change message?
