@@ -1,13 +1,10 @@
 #!/usr/bin/python
-#This is DRL as of 10/22/18
+#This is the IPF Deluxe Version of DRL as of 4/16/17
 
 #DRL Version 2.0.1
 #Includes slow clock bug, and 3 dots of death fix.
 #2.0.3-Resizing of logos for different resolutions
 #2.0.4-IPF 3rd timer requirement.
-#2.0.4- World Games RS232 Compatability
-#2.0.5- LiftingCast Integration
-#2.0.6-Auto Update functionality
 
 #Created by Scott Dobbins
 #This software shall not be redistrubted without the expressed written consent of Scott Dobbins
@@ -50,7 +47,7 @@ main_logo_enable = True
 logo_name = "uruguay.png"
 #----------------------------
 #Configure the Startup Screen'''
-version_text = 'Version: 2.0.7'
+version_text = 'Version: 2.0.4'
 #-----------------------------
 #Configure Opener Change
 #opener change message?
@@ -99,7 +96,7 @@ while initialization_timer >= 0:
     surface.fill((0,0,0)) #color the screen black
 
     #pygame.draw.rect(surface, (0,148,71),(0,0, dimensions.current_w, dimensions.current_h),10)#this draws the green border
-    logo = pygame.image.load(".DRL Logo.png") #load in the image you want displayed
+    logo = pygame.image.load("DRL Logo.png") #load in the image you want displayed
     scaled_logo_main = pygame.transform.scale(logo, ((dimensions.current_w/100)*35, (dimensions.current_h/100)*70)) #rescales the image based on the screen
 
     surface.blit(scaled_logo_main, ((dimensions.current_w/100)*34, (dimensions.current_h/100)*4)) #place the image with the left hand corner being (0,0)
@@ -107,11 +104,11 @@ while initialization_timer >= 0:
 
     init_timer_string = str(initialization_timer)
     intro_message = 'Initalizing the DRL System...'+ init_timer_string
-    textFont = pygame.font.Font(".SafetyMedium.otf",(dimensions.current_w/20))
+    textFont = pygame.font.Font("SafetyMedium.otf",(dimensions.current_w/20))
     Welcome_message = textFont.render(intro_message, 0, (0,148,71))
     surface.blit(Welcome_message,(((dimensions.current_w)/100)*12,((dimensions.current_h)/100)*85))
 
-    version_font = pygame.font.Font(".SafetyMedium.otf",(dimensions.current_w/45))
+    version_font = pygame.font.Font("SafetyMedium.otf",(dimensions.current_w/45))
     version_message = version_font.render(version_text, 0, (0,148,71))
     surface.blit(version_message,(((dimensions.current_w)/100)*12,((dimensions.current_h)/100)*98))
     
@@ -120,12 +117,12 @@ while initialization_timer >= 0:
  
     pygame.display.update()
 
-textFont = pygame.font.Font(".SafetyMedium.otf",(dimensions.current_w/20)) #sets the font for the numbers
+textFont = pygame.font.Font("SafetyMedium.otf",(dimensions.current_w/20)) #sets the font for the numbers
 
 pygame.display.update()
 
  
-DRL_logo = pygame.image.load(".DRL Logo.png")
+DRL_logo = pygame.image.load("DRL Logo.png")
 #logo = pygame.image.load(".DRL Logo.png") #load in the image you want displayed
 
 scaled_logo = pygame.transform.scale(DRL_logo, (dimensions.current_w/4, dimensions.current_h/2)) #rescales the image based on the screen
@@ -377,15 +374,15 @@ Time = [1,0] # this array is the value of the clock
 
 OriginalTime = list(Time)
 Screen = max(pygame.display.list_modes())#initialize the screen 
-Font = pygame.font.Font(".SafetyMedium.otf",dimensions.current_h/4)#sets font to cool digital clock (thats  necessary for IPF lights)
-attempt_clock_font = pygame.font.Font(".SafetyMedium.otf", dimensions.current_h/8)#sets the font size of the smaller clock
+Font = pygame.font.Font("SafetyMedium.otf",dimensions.current_h/4)#sets font to cool digital clock (thats  necessary for IPF lights)
+attempt_clock_font = pygame.font.Font("SafetyMedium.otf", dimensions.current_h/8)#sets the font size of the smaller clock
 
 
 
 
 #This code imports and plays the "beeping" sound
 pygame.mixer.init()
-pygame.mixer.music.load(".beep-08b.mp3")
+pygame.mixer.music.load("beep-08b.mp3")
 
 
 def change_light():
@@ -739,7 +736,7 @@ def Update():
 
             if Time[0] == 0 and Time[1] == 30:
                 print "30 seconds!"
-                pygame.mixer.music.load(".beep-08b.mp3")
+                pygame.mixer.music.load("beep-08b.mp3")
                 #beep every second its in here
                 pygame.mixer.music.play(0,0.0)
                 pygame.mixer.music.play(0,0.0)
@@ -747,7 +744,7 @@ def Update():
                 
             if Time[0] == 0 and Time[1] < 11 and Time[1]>0:
 
-                pygame.mixer.music.load(".beep-08b.mp3")
+                pygame.mixer.music.load("beep-08b.mp3")
                 #beep every second its in here
                 pygame.mixer.music.play(0,0.0)
                 
@@ -756,7 +753,7 @@ def Update():
                 Timer_Enter = False
 
                 #this means the lifter's timer is zero, we need to play a buzz!
-                pygame.mixer.music.load(".no_lift_buzzer.mp3")
+                pygame.mixer.music.load("no_lift_buzzer.mp3")
                 pygame.mixer.music.play(0,0.0)
 
             x = pygame.time.get_ticks()
@@ -939,7 +936,7 @@ def Draw():
             pygame.draw.circle(surface, (red12,green12,blue12), (((dimensions.current_w)/10)*9, ((dimensions.current_h)/100)*83), ((dimensions.current_w/25)),0)
 
 
-        numberFont = pygame.font.Font(".SafetyMedium.otf",(dimensions.current_w/16)) #sets the font size, needs to be a percentage of the screen width
+        numberFont = pygame.font.Font("SafetyMedium.otf",(dimensions.current_w/16)) #sets the font size, needs to be a percentage of the screen width
 
         red_card_ref_1 = numberFont.render ('1', 0,(0, 0, 0))#sets text color and content
         blue_card_ref_1 = numberFont.render ('2', 0,(0, 0, 0))#sets text color and content
@@ -1139,7 +1136,7 @@ def Draw():
 
         surface.blit(attempt_clock, ((dimensions.current_w/100)*20,(dimensions.current_h/100)*91)) #places the text on the screen at desired coordinates
 
-        textFont = pygame.font.Font(".SafetyMedium.otf",(dimensions.current_w/47)) #sets the font for the numbers
+        textFont = pygame.font.Font("SafetyMedium.otf",(dimensions.current_w/47)) #sets the font for the numbers
 
         attempt_message = textFont.render('ATTEMPT', 0,(225,228,0))
         attempt_message2 = textFont.render('SELECTION', 0, (225,228,0))
@@ -1195,7 +1192,7 @@ def Draw():
 
 
 
-        third_message_Font = pygame.font.Font(".SafetyMedium.otf",dimensions.current_w/23)
+        third_message_Font = pygame.font.Font("SafetyMedium.otf",dimensions.current_w/23)
         third_message = third_message_Font.render('3rd ATTEMPTS', 0,(0, 148, 71))
 
 
@@ -1213,7 +1210,7 @@ def Draw():
 
 
     if meet_break: #if meetbreak is shown we need to periodically display warning messages about openeing changes
-        safety_Font = pygame.font.Font(".SafetyMedium.otf",dimensions.current_w/20)
+        safety_Font = pygame.font.Font("SafetyMedium.otf",dimensions.current_w/20)
 
 
 
@@ -1304,11 +1301,11 @@ def third_attempt_change():
 
     #pygame.draw.rect(surface, (0,148,71),(0,0, dimensions.current_w, dimensions.current_h),10)
 
-    logo = pygame.image.load(".DRL Logo.png") #load in the image you want displayed
+    logo = pygame.image.load("DRL Logo.png") #load in the image you want displayed
 
     scaled_logo = pygame.transform.scale(logo, (dimensions.current_w/8, dimensions.current_h/4)) #rescales the image based on the screen
 
-    Dodge_Font = pygame.font.Font(".SafetyMedium.otf",dimensions.current_w/16)
+    Dodge_Font = pygame.font.Font("SafetyMedium.otf",dimensions.current_w/16)
     
     while bump_inputted and third_bump_enabled: #so long as this variable is true, we need to stay in this loop and keep pasting over the screen with the Rohr Message
         surface.fill((0,0,0))
@@ -1491,7 +1488,7 @@ def timer_update():
 
     #when a key is pressed we need to enter a "modify timer mode" then exit when another key is pressed.
 
-    safety_Font = pygame.font.Font(".SafetyMedium.otf",dimensions.current_h/9)
+    safety_Font = pygame.font.Font("SafetyMedium.otf",dimensions.current_h/9)
     timer_message = safety_Font.render('Timer Edit Mode', 0,(0, 148, 71))
     
     
@@ -1785,7 +1782,7 @@ def audio_output():
     global audio_toggle, surface
 
 
-    textFont = pygame.font.Font(".SafetyMedium.otf",(dimensions.current_w/40))
+    textFont = pygame.font.Font("SafetyMedium.otf",(dimensions.current_w/40))
     
     audio_toggle = audio_toggle + 1
     
@@ -1813,11 +1810,11 @@ def drl_menu():
             
         surface.fill((0,0,0))
         #pygame.draw.rect(surface, (0,148,71),(0,0, dimensions.current_w, dimensions.current_h),10)
-        logo = pygame.image.load(".DRL Logo.png") #load in the image you want displayed
+        logo = pygame.image.load("DRL Logo.png") #load in the image you want displayed
         scaled_logo = pygame.transform.scale(logo, (dimensions.current_w/8, dimensions.current_h/4)) #rescales the image based on the screen
         surface.blit(scaled_logo, (dimensions.current_w/25, dimensions.current_h/20))
 
-        Dodge_Font = pygame.font.Font(".SafetyMedium.otf",dimensions.current_w/16)
+        Dodge_Font = pygame.font.Font("SafetyMedium.otf",dimensions.current_w/16)
         bump_message1 = Dodge_Font.render('Menu', 0,(0,148,71))
         menu_message = bump_message1.get_rect()
         menu_message.centerx = (dimensions.current_w/100)*50
@@ -1825,7 +1822,7 @@ def drl_menu():
         surface.blit(bump_message1, menu_message)
 
         
-        Dodge_Font2 = pygame.font.Font(".SafetyMedium.otf",dimensions.current_w/30)
+        Dodge_Font2 = pygame.font.Font("SafetyMedium.otf",dimensions.current_w/30)
         message2 = Dodge_Font2.render('Use keypad to select desired option', 0,(0,148,71))
         menu_message2= message2.get_rect()
         menu_message2.centerx = (dimensions.current_w/100)*50
@@ -1997,7 +1994,7 @@ def get_ip_address(ifname):
 #--------------------------------------------------------------------
 def display_ip_address():
     #this will do the formatting to display the IP address.
-    textFont = pygame.font.Font(".SafetyMedium.otf",(dimensions.current_w/40))
+    textFont = pygame.font.Font("SafetyMedium.otf",(dimensions.current_w/40))
 
     try:
         ip_address = textFont.render("IP address:" + get_ip_address('eth0'), 0,(0,148,71))
@@ -2198,7 +2195,7 @@ while True:
 
                 #print 'nolift has been detected'
 
-                    pygame.mixer.music.load(".no_lift_buzzer.mp3")
+                    pygame.mixer.music.load("no_lift_buzzer.mp3")
                     pygame.mixer.music.play(0,0.0) #play the buzzer once\
 
       
