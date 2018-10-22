@@ -5,6 +5,9 @@
 #Includes slow clock bug, and 3 dots of death fix.
 #2.0.3-Resizing of logos for different resolutions
 #2.0.4-IPF 3rd timer requirement.
+#2.0.4- World Games RS232 Compatability
+#2.0.5- LiftingCast Integration
+#2.0.6-Auto Update functionality
 
 #Created by Scott Dobbins
 #This software shall not be redistrubted without the expressed written consent of Scott Dobbins
