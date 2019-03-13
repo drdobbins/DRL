@@ -683,9 +683,9 @@ def Update():
     if scroll_lock_count%2 == 0:
         Timer_Enter = False
         #scroll_lock_count = 0 # attempt to get clock to stop running after lights come on.
-        if meet_break == False:
+        if meet_break == False and Time[0]<1:
 			Time = [1,0]
-
+			print("resetting clock")
     else:
         Timer_Enter = True
         
@@ -1095,7 +1095,7 @@ def Draw():
 
         
     #------draws the main clock-------------------------------
-   
+    print("we are printing the time ", Time, "to the screen")
     t1 = str(Time[0]) #converts the minute area into a string
     if len(t1) == 1: t1 = t1 #if the string has something in it, do nothing
     t2 = str(Time[1])
@@ -1487,7 +1487,7 @@ def third_attempt_change():
 def timer_update():
     #this function will allow the user to change the duration of the main timer for breaks and what not
 
-    global meet_break, Time, timer_edit_mode, scroll_lock_count
+    global meet_break, Time, timer_edit_mode, scroll_lock_count, opener_min_time
 
     #when a key is pressed we need to enter a "modify timer mode" then exit when another key is pressed.
 
@@ -1635,7 +1635,7 @@ def timer_update():
                 timer_edit_mode = False
                 print Time
                 scroll_lock_count = 0
-                if Time[0] >= 5:
+                if Time[0] >= opener_min_time:
                     meet_break = True #if the timer has been set for 5 min or greater, we need to display opener change warnings
                     #print 'a timer duration greater than 5 minutes has been detected'
                 else:
@@ -2066,6 +2066,7 @@ while True:
                 #we need to put some sort of conditional statement here that only allows all the "resetting" to be done 2 seconds after all decesions have came in, so all refs have a chance to submit more than 1 infaction
 
                 scroll_lock_count = 0 # attempt to get clock to stop running after lights come on.
+                print("reset the clock, a decision has been made")
                 Time = [1,0] #This is part of the raw nats update, lets the clock start again immedately. 
             
                 #print "a referee decesion has been detected"
