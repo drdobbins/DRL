@@ -8,6 +8,7 @@
 #2.0.5-World Games RS232 Integration
 #2.0.6-LiftingCast Integration
 #2.0.7-Remote Update Functionality
+#2.0.8- Left shift required to exit the program. 
 
 #Created by Scott Dobbins
 #This software shall not be redistrubted without the expressed written consent of Scott Dobbins
@@ -85,6 +86,8 @@ os.system('amixer cset numid=3 2') #sets the audio output to digital this will b
 dimensions = pygame.display.Info() #this grabs the screen's size in pixels
 
 surface = pygame.display.set_mode((dimensions.current_w, dimensions.current_h), pygame.FULLSCREEN)#creates the main window
+#uncomment for debug.
+#surface = pygame.display.set_mode((dimensions.current_w, dimensions.current_h))#creates the main window
 
 pygame.mouse.set_visible(0)#remvoes the mouse icon rom the main screen
 
@@ -2371,7 +2374,7 @@ while True:
                             
 #--------------------------------------------------------------------------------------
 
-			if event.key == pygame.K_ESCAPE:
+			if event.key == pygame.K_ESCAPE and pygame.key.get_mods() & pygame.KMOD_SHIFT:
 				quitGame()
 #-------------------------------------------------------------
 
