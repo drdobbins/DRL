@@ -51,7 +51,7 @@ main_logo_enable = True
 logo_name = "uruguay.png"
 #----------------------------
 #Configure the Startup Screen'''
-version_text = 'Version: 2.0.7.1'
+version_text = 'Version: 2.0.8'
 #-----------------------------
 #Configure Opener Change
 #opener change message?
