@@ -1231,20 +1231,21 @@ def Draw():
 
             warning_message = safety_Font.render ('Time left to change openers', 0, (255,0,0))
             time_left = attempt_clock_font.render(warning_string, 0, (255,0,0))
-
+            draw_main_logo = False
             
             surface.blit(warning_message, ((((dimensions.current_w)/100)*12),((dimensions.current_h/100)*40)))
             surface.blit(time_left, ((((dimensions.current_w)/100)*40),((dimensions.current_h/100)*55))) 
             
         if Time[0] <= (opener_min_time-1) and Time[1] <= 59 and opener_changes_allowed :
             # this displays the "no more changes" message 
-            
+            draw_main_logo = False
             warning_message1 = safety_Font.render ('NO MORE CHANGES TO OPENERS', 0, (255,0,0))
     
             surface.blit(warning_message1, ((((dimensions.current_w)/100)*4),((dimensions.current_h/100)*50)))
 
             if Time[0] == 0 and Time[1] == 0:
                 meet_break = False
+                draw_main_logo = True
                 Timer_Enter = True#playing around with this value
                 #Time = [1,0]
                 Time = [1,0]
